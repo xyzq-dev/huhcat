@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buy $HUHCAT</title>
+    <title>Huhcat - Buy $HUHCAT</title>
     <link rel="icon" type="image/png" href="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png">
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <style>
@@ -68,30 +68,36 @@
         var catImage = document.getElementById('catImage');
         var countDisplay = document.getElementById('counter');
         var isMouseDown = false;
-        var timer;
+        var counterLock = false;
         var lastSoundTime = 0;
+        var mousedownTimestamp;
 
         catImage.addEventListener('mousedown', function(event) {
             event.preventDefault();
             if (!isMouseDown) {
+                mousedownTimestamp = Date.now();
+                isMouseDown = true;
                 playSound();
                 catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
-                isMouseDown = true;
-
-                incrementCounter();
-
-                timer = setTimeout(function() {
-                    catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
-                    isMouseDown = false;
-                }, 200); // Ensuring the image is visible for at least 200 ms
+                
+                if (!counterLock) {
+                    incrementCounter();
+                    counterLock = true;
+                    setTimeout(function() { counterLock = false; }, 200);
+                }
             }
         });
 
         document.addEventListener('mouseup', function() {
-            if (isMouseDown && timer) {
-                clearTimeout(timer);
-                catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+            if (isMouseDown) {
                 isMouseDown = false;
+                if (Date.now() - mousedownTimestamp >= 200) {
+                    catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+                } else {
+                    setTimeout(function() {
+                        catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+                    }, 200 - (Date.now() - mousedownTimestamp));
+                }
             }
         });
 
