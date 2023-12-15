@@ -62,51 +62,40 @@
         var counter = 0;
         var catImage = document.getElementById('catImage');
         var countDisplay = document.getElementById('counter');
+        var lastIncrementTime = 0;
         var lastSoundPlayTime = 0;
         var isMouseDown = false;
 
-        catImage.addEventListener('mousedown', function(event) {
+        catImage.addEventListener('mousedown', handleMouseDown);
+        document.addEventListener('mouseup', handleMouseUp);
+        catImage.addEventListener('touchstart', handleMouseDown);
+        document.addEventListener('touchend', handleMouseUp);
+
+        function handleMouseDown(event) {
             event.preventDefault();
             playSound();
             catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
             isMouseDown = true;
-            setTimeout(function() {
-                if (isMouseDown) {
-                    incrementCounter();
-                }
-            }, 400);
-        });
+            incrementCounter();
+        }
 
-        document.addEventListener('mouseup', function() {
+        function handleMouseUp() {
             if (isMouseDown) {
-                catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+                setTimeout(function() {
+                    catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+                }, 370);
                 isMouseDown = false;
             }
-        });
-
-        catImage.addEventListener('touchstart', function(event) {
-            event.preventDefault();
-            playSound();
-            catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
-            isMouseDown = true;
-            setTimeout(function() {
-                if (isMouseDown) {
-                    incrementCounter();
-                }
-            }, 400);
-        });
-
-        document.addEventListener('touchend', function() {
-            if (isMouseDown) {
-                catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
-                isMouseDown = false;
-            }
-        });
+        }
 
         function incrementCounter() {
-            counter++;
-            countDisplay.textContent = counter;
-            applyPopAnimation();
+            var currentTime = new Date().getTime();
+            if (currentTime - lastIncrementTime >= 370) {
+                counter++;
+                countDisplay.textContent = counter;
+                applyPopAnimation();
+                lastIncrementTime = currentTime;
+            }
         }
 
         function applyPopAnimation() {
