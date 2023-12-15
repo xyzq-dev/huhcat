@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Huhcat - $HUHCAT</title>
+    <title>Buy $HUHCAT</title>
     <link rel="icon" type="image/png" href="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png">
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <style>
@@ -20,6 +20,10 @@
             text-decoration: none;
             padding: 0 15px;
             font-size: 24px;
+        }
+        h1 {
+            font-size: 70px; /* Increased title font size */
+            margin-bottom: 10px;
         }
         #counter {
             font-size: 48px;
@@ -53,6 +57,7 @@
         <a href="https://buyhuhcatlink.com" target="_blank">Buy $HUHCAT</a>
         <a href="https://huhcatchartlink.com" target="_blank">CHART</a>
     </div>
+    <h1>$HUHCAT</h1>
     <div id="counter">0</div>
     <img src="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png"
          alt="Click the cat"
@@ -62,57 +67,77 @@
         var counter = 0;
         var catImage = document.getElementById('catImage');
         var countDisplay = document.getElementById('counter');
-        var lastIncrementTime = 0;
-        var lastSoundPlayTime = 0;
         var isMouseDown = false;
+        var timer;
+        var lastSoundTime = 0;
 
-        catImage.addEventListener('mousedown', handleMouseDown);
-        document.addEventListener('mouseup', handleMouseUp);
-        catImage.addEventListener('touchstart', handleMouseDown);
-        document.addEventListener('touchend', handleMouseUp);
+        catImage.addEventListener('mousedown', function(event) {
+            event.preventDefault();
+            clearTimeout(timer);
+            playSound();
+            catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
+            isMouseDown = true;
+            timer = setTimeout(function() {
+                if (isMouseDown) {
+                    incrementCounter();
+                }
+            }, 400); // Ensuring the image is visible for at least 400 ms
+        });
 
-        function handleMouseDown(event) {
+        document.addEventListener('mouseup', function() {
+            if (isMouseDown) {
+                if (timer) {
+                    clearTimeout(timer);
+                    incrementCounter();
+                }
+                catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+                isMouseDown = false;
+            }
+        });
+
+        catImage.addEventListener('touchstart', function(event) {
             event.preventDefault();
             playSound();
             catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
             isMouseDown = true;
-            incrementCounter();
-        }
+            timer = setTimeout(function() {
+                if (isMouseDown) {
+                    incrementCounter();
+                }
+            }, 400); // Ensuring the image is visible for at least 400 ms
+        });
 
-        function handleMouseUp() {
+        document.addEventListener('touchend', function() {
             if (isMouseDown) {
-                setTimeout(function() {
-                    catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
-                }, 370);
+                if (timer) {
+                    clearTimeout(timer);
+                    incrementCounter();
+                }
+                catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
                 isMouseDown = false;
             }
-        }
+        });
 
         function incrementCounter() {
-            var currentTime = new Date().getTime();
-            if (currentTime - lastIncrementTime >= 370) {
-                counter++;
-                countDisplay.textContent = counter;
-                applyPopAnimation();
-                lastIncrementTime = currentTime;
-            }
+            counter++;
+            countDisplay.textContent = counter;
+            applyPopAnimation();
         }
 
         function applyPopAnimation() {
-            var randomRotation = (Math.random() > 0.5 ? 1 : -1) * Math.random() * 30;
+            var randomRotation = (Math.random() > 0.5 ? 1 : -1) * Math.random() * 20;
             countDisplay.style.setProperty('--rotation', randomRotation + 'deg');
             countDisplay.classList.add('pop');
             setTimeout(function() {
                 countDisplay.classList.remove('pop');
-            }, 100);
+            }, 200);
         }
 
         function playSound() {
-            var currentTime = new Date().getTime();
-            if (currentTime - lastSoundPlayTime >= 200) { // 200 ms interval
+            if (Date.now() - lastSoundTime > 200) { // Minimum interval for audio playback
                 var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3');
                 sound.play();
-                lastSoundPlayTime = currentTime;
+                lastSoundTime = Date.now();
             }
         }
     </script>
