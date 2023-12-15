@@ -23,28 +23,19 @@
          aria-label="Click the cat to see what happens">
     <script>
         // Preload images and sound
-        var image1 = new Image();
-        var image2 = new Image();
-        var sound = new Audio();
-
-        image1.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
-        image2.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
-        sound.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3';
-
-        // Function to toggle image
-        function toggleImage() {
-            var catImage = document.getElementById('catImage');
-            if (catImage.src === image1.src) {
-                catImage.src = image2.src;
-            } else {
-                catImage.src = image1.src;
-            }
-        }
+        var image1 = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+        var image2 = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
+        var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3');
 
         // Set up click event listener
         document.getElementById('catImage').addEventListener('click', function() {
             sound.play().catch(e => console.error('Error playing sound:', e));
-            toggleImage();
+            this.src = image2;
+
+            // Set a timeout to switch back to the first image after 0.1 seconds
+            setTimeout(() => {
+                this.src = image1;
+            }, 100); // 100 milliseconds = 0.1 seconds
         });
     </script>
 </body>
