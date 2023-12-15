@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HUHCAT</title>
-    <link rel="icon" type="image/png" href="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huhcat_logo.png">
+    <link rel="icon" type="image/png" href="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png">
     <style>
         body {
             text-align: center;
@@ -52,15 +52,15 @@
             clearTimeout(timer); // Clear any previous timer
             sound.play();
             catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
-            countDisplay.textContent = ++counter;
             isMouseDown = true;
         });
 
         document.addEventListener('mouseup', function() {
             if (isMouseDown) {
-                // Set a timer to revert the image after a minimum of 400ms
+                // Set a timer to revert the image and increment the counter after a minimum of 400ms
                 timer = setTimeout(function() {
                     catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+                    countDisplay.textContent = ++counter;
                 }, 400);
                 isMouseDown = false;
             }
@@ -72,15 +72,15 @@
             clearTimeout(timer); // Clear any previous timer
             sound.play();
             catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
-            countDisplay.textContent = ++counter;
             isMouseDown = true;
         });
 
         document.addEventListener('touchend', function() {
             if (isMouseDown) {
-                // Set a timer to revert the image after a minimum of 400ms
+                // Set a timer to revert the image and increment the counter after a minimum of 400ms
                 timer = setTimeout(function() {
                     catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+                    countDisplay.textContent = ++counter;
                 }, 400);
                 isMouseDown = false;
             }
