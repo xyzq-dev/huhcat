@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HUHCAT</title>
+    <title>POPCAT</title>
     <style>
         body {
             text-align: center;
@@ -19,11 +19,10 @@
         }
         img {
             cursor: pointer;
-            /* Adjust the width to fit the content of your site */
-            width: 300px;
-            user-select: none; /* Prevents the image from being draggable in some browsers */
+            width: 300px; /* Adjust based on actual image size */
+            user-select: none; /* Prevents the image from being draggable */
         }
-        /* Optional: Prevents text selection during rapid clicking */
+        /* Prevents text selection during rapid clicking */
         img:active {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -33,7 +32,7 @@
     </style>
 </head>
 <body>
-    <h1>HUHCAT</h1>
+    <h1>POPCAT</h1>
     <div id="counter">0</div>
     <img src="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png"
          alt="Click the cat"
@@ -43,32 +42,33 @@
         var counter = 0;
         var catImage = document.getElementById('catImage');
         var countDisplay = document.getElementById('counter');
-        var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound_new.mp3');
+        var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3');
 
-        catImage.addEventListener('mousedown', function() {
+        // Preload second image
+        var image2 = new Image();
+        image2.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
+
+        catImage.addEventListener('mousedown', function(event) {
+            event.preventDefault();
             sound.play();
-            this.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound_new.mp3';
+            catImage.src = image2.src;
             countDisplay.textContent = ++counter;
         });
 
-        catImage.addEventListener('mouseup', function() {
-            this.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
-        });
-
-        catImage.addEventListener('mouseleave', function() {
-            this.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+        document.addEventListener('mouseup', function() {
+            catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
         });
 
         // Optional: Handle touch events for mobile browsers
-        catImage.addEventListener('touchstart', function(e) {
-            e.preventDefault(); // Prevents additional mouse events on touch devices
+        catImage.addEventListener('touchstart', function(event) {
+            event.preventDefault(); // Prevents additional mouse events on touch devices
             sound.play();
-            this.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
+            catImage.src = image2.src;
             countDisplay.textContent = ++counter;
         });
 
-        catImage.addEventListener('touchend', function() {
-            this.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+        document.addEventListener('touchend', function() {
+            catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
         });
     </script>
 </body>
