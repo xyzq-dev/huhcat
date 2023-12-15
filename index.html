@@ -15,22 +15,15 @@
             font-family: 'Lilita One', cursive;
             color: white;
         }
-        #navbar {
-            margin-bottom: 20px;
-        }
         #navbar a {
             color: white;
             text-decoration: none;
             padding: 0 15px;
             font-size: 24px;
         }
-        h1 {
-            font-size: 60px;
-            margin: 10px 0;
-        }
         #counter {
             font-size: 48px;
-            margin: 0;
+            margin: 20px 0;
         }
         @keyframes pop {
             0% { transform: scale(1) rotate(0deg); }
@@ -44,7 +37,6 @@
             cursor: pointer;
             width: 600px;
             user-select: none;
-            margin-bottom: 10px;
         }
         img:active {
             -webkit-user-select: none;
@@ -52,32 +44,14 @@
             -ms-user-select: none;
             user-select: none;
         }
-        .button-container {
-            display: flex;
-            justify-content: center;
-        }
-        .buy-button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px 40px;
-            font-size: 24px;
-            border: none;
-            cursor: pointer;
-        }
-        .buy-button:hover {
-            background-color: #45a049;
-        }
     </style>
 </head>
 <body>
     <div id="navbar">
-        <a href="https://twitter.com/yourtwitterlink" target="_blank">Twitter</a>
-        <a href="https://t.me/yourtelegramlink" target="_blank">Telegram</a>
-        <a href="https://huhcatchartlink.com" target="_blank">Chart</a>
-    </div>
-    <h1>HUHCAT</h1>
-    <div class="button-container">
-        <a href="https://buyhuhcatlink.com" target="_blank" class="buy-button">Buy $HUHCAT</a>
+        <a href="https://twitter.com/yourtwitterlink" target="_blank">TWITTER</a>
+        <a href="https://t.me/yourtelegramlink" target="_blank">TELEGRAM</a>
+        <a href="https://buyhuhcatlink.com" target="_blank">Buy $HUHCAT</a>
+        <a href="https://huhcatchartlink.com" target="_blank">CHART</a>
     </div>
     <div id="counter">0</div>
     <img src="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png"
@@ -88,16 +62,15 @@
         var counter = 0;
         var catImage = document.getElementById('catImage');
         var countDisplay = document.getElementById('counter');
+        var lastSoundPlayTime = 0;
         var isMouseDown = false;
-        var timer;
 
         catImage.addEventListener('mousedown', function(event) {
             event.preventDefault();
-            clearTimeout(timer); // Clear any previous timer
             playSound();
             catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
             isMouseDown = true;
-            timer = setTimeout(function() {
+            setTimeout(function() {
                 if (isMouseDown) {
                     incrementCounter();
                 }
@@ -106,10 +79,6 @@
 
         document.addEventListener('mouseup', function() {
             if (isMouseDown) {
-                if (timer) {
-                    clearTimeout(timer);
-                    incrementCounter();
-                }
                 catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
                 isMouseDown = false;
             }
@@ -120,7 +89,7 @@
             playSound();
             catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
             isMouseDown = true;
-            timer = setTimeout(function() {
+            setTimeout(function() {
                 if (isMouseDown) {
                     incrementCounter();
                 }
@@ -129,10 +98,6 @@
 
         document.addEventListener('touchend', function() {
             if (isMouseDown) {
-                if (timer) {
-                    clearTimeout(timer);
-                    incrementCounter();
-                }
                 catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
                 isMouseDown = false;
             }
@@ -145,17 +110,21 @@
         }
 
         function applyPopAnimation() {
-            var randomRotation = (Math.random() > 0.5 ? 1 : -1) * Math.random() * 20;
+            var randomRotation = (Math.random() > 0.5 ? 1 : -1) * Math.random() * 30;
             countDisplay.style.setProperty('--rotation', randomRotation + 'deg');
             countDisplay.classList.add('pop');
             setTimeout(function() {
                 countDisplay.classList.remove('pop');
-            }, 200);
+            }, 100);
         }
 
         function playSound() {
-            var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3');
-            sound.play();
+            var currentTime = new Date().getTime();
+            if (currentTime - lastSoundPlayTime >= 200) { // 200 ms interval
+                var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3');
+                sound.play();
+                lastSoundPlayTime = currentTime;
+            }
         }
     </script>
 </body>
