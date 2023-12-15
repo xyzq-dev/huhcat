@@ -9,21 +9,31 @@
     <style>
         body {
             text-align: center;
-            padding-top: 50px;
-            background-color: #a68d60; /* Adjust the color to match the image */
-            font-family: 'Arial', sans-serif; /* Adjust the font to match the image */
-            color: white; /* Adjust text color if needed */
+            padding-top: 20px;
+            background-color: #a68d60;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+        #navbar {
+            margin-bottom: 20px;
+        }
+        #navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 0 10px;
+        }
+        #navbar a:hover {
+            text-decoration: underline;
         }
         #counter {
-            font-size: 48px; /* Adjust font size as needed */
-            margin-top: 20px; /* Adjust spacing as needed */
+            font-size: 48px;
+            margin: 20px 0;
         }
         img {
             cursor: pointer;
-            width: 300px; /* Adjust based on actual image size */
-            user-select: none; /* Prevents the image from being draggable */
+            width: 300px;
+            user-select: none;
         }
-        /* Prevents text selection during rapid clicking */
         img:active {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -33,6 +43,12 @@
     </style>
 </head>
 <body>
+    <div id="navbar">
+        <a href="https://twitter.com/yourtwitterlink" target="_blank">TWITTER</a> |
+        <a href="https://t.me/yourtelegramlink" target="_blank">TELEGRAM</a> |
+        <a href="https://buyhuhcatlink.com" target="_blank">Buy $HUHCAT</a> |
+        <a href="https://huhcatchartlink.com" target="_blank">CHART</a>
+    </div>
     <h1>HUHCAT</h1>
     <div id="counter">0</div>
     <img src="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png"
@@ -45,13 +61,7 @@
         var countDisplay = document.getElementById('counter');
         var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3');
         var isMouseDown = false;
-        var timerStarted = false;
-        
-        function incrementCounter() {
-            if (!timerStarted) {
-                countDisplay.textContent = ++counter;
-            }
-        }
+        var timer;
 
         catImage.addEventListener('mousedown', function(event) {
             event.preventDefault();
@@ -59,43 +69,49 @@
             sound.play();
             catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
             isMouseDown = true;
-            timerStarted = true;
 
-            // Set a timer to increment the counter after a minimum of 400ms
+            // Start the timer upon mouse down
             timer = setTimeout(function() {
-                incrementCounter();
-                timerStarted = false;
+                if (isMouseDown) { // Only increment if mouse is still down
+                    countDisplay.textContent = ++counter;
+                }
             }, 400);
         });
 
         document.addEventListener('mouseup', function() {
             if (isMouseDown) {
-                if (!timerStarted) {
-                    incrementCounter(); // If the timer hasn't started, increment immediately
+                // Check if the timer has completed
+                if (timer) {
+                    clearTimeout(timer); // Clear the timer
+                    countDisplay.textContent = ++counter; // Increment the counter
                 }
                 catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
                 isMouseDown = false;
             }
         });
 
-        // Optional: Handle touch events for mobile browsers
+        // Handle touch events for mobile browsers
         catImage.addEventListener('touchstart', function(event) {
             event.preventDefault(); // Prevents additional mouse events on touch devices
+            clearTimeout(timer); // Clear any previous timer
             sound.play();
             catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
             isMouseDown = true;
 
-            // Set a timer to increment the counter after a minimum of 400ms
+            // Start the timer upon touch start
             timer = setTimeout(function() {
-                incrementCounter();
-                timerStarted = false;
+                if (isMouseDown) { // Only increment if touch is still active
+                    countDisplay.textContent = ++counter;
+                }
             }, 400);
         });
 
         document.addEventListener('touchend', function() {
             if (isMouseDown) {
-                if (!timerStarted) {
-                    incrementCounter(); // If the timer hasn't started, increment immediately
+                // Check if the timer has completed
+                if (timer) {
+                    clearTimeout(timer); // Clear the timer
+                    countDisplay.textContent = ++counter; // Increment the counter
                 }
                 catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
                 isMouseDown = false;
