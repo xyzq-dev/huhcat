@@ -73,46 +73,23 @@
 
         catImage.addEventListener('mousedown', function(event) {
             event.preventDefault();
-            clearTimeout(timer);
-            playSound();
-            catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
-            isMouseDown = true;
-            timer = setTimeout(function() {
-                if (isMouseDown) {
-                    incrementCounter();
-                }
-            }, 400); // Ensuring the image is visible for at least 400 ms
-        });
+            if (!isMouseDown) {
+                playSound();
+                catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
+                isMouseDown = true;
 
-        document.addEventListener('mouseup', function() {
-            if (isMouseDown) {
-                if (timer) {
-                    clearTimeout(timer);
-                    incrementCounter();
-                }
-                catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
-                isMouseDown = false;
+                incrementCounter();
+
+                timer = setTimeout(function() {
+                    catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+                    isMouseDown = false;
+                }, 200); // Ensuring the image is visible for at least 200 ms
             }
         });
 
-        catImage.addEventListener('touchstart', function(event) {
-            event.preventDefault();
-            playSound();
-            catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
-            isMouseDown = true;
-            timer = setTimeout(function() {
-                if (isMouseDown) {
-                    incrementCounter();
-                }
-            }, 400); // Ensuring the image is visible for at least 400 ms
-        });
-
-        document.addEventListener('touchend', function() {
-            if (isMouseDown) {
-                if (timer) {
-                    clearTimeout(timer);
-                    incrementCounter();
-                }
+        document.addEventListener('mouseup', function() {
+            if (isMouseDown && timer) {
+                clearTimeout(timer);
                 catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
                 isMouseDown = false;
             }
