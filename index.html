@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Huhcat - $HUHCAT</title>
     <link rel="icon" type="image/png" href="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png">
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
-
         body {
             text-align: center;
             padding-top: 20px;
@@ -29,6 +28,14 @@
         #counter {
             font-size: 48px;
             margin: 20px 0;
+        }
+        @keyframes pop {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(var(--rotation)); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        #counter.pop {
+            animation: pop 100ms ease-in-out;
         }
         img {
             cursor: pointer;
@@ -60,64 +67,75 @@
         var counter = 0;
         var catImage = document.getElementById('catImage');
         var countDisplay = document.getElementById('counter');
-        var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3');
         var isMouseDown = false;
         var timer;
 
         catImage.addEventListener('mousedown', function(event) {
             event.preventDefault();
             clearTimeout(timer); // Clear any previous timer
-            sound.play();
+            playSound();
             catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
             isMouseDown = true;
-
-            // Start the timer upon mouse down
             timer = setTimeout(function() {
-                if (isMouseDown) { // Only increment if mouse is still down
-                    countDisplay.textContent = ++counter;
+                if (isMouseDown) {
+                    incrementCounter();
                 }
             }, 400);
         });
 
         document.addEventListener('mouseup', function() {
             if (isMouseDown) {
-                // Check if the timer has completed
                 if (timer) {
-                    clearTimeout(timer); // Clear the timer
-                    countDisplay.textContent = ++counter; // Increment the counter
+                    clearTimeout(timer);
+                    incrementCounter();
                 }
                 catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
                 isMouseDown = false;
             }
         });
 
-        // Handle touch events for mobile browsers
         catImage.addEventListener('touchstart', function(event) {
-            event.preventDefault(); // Prevents additional mouse events on touch devices
-            clearTimeout(timer); // Clear any previous timer
-            sound.play();
+            event.preventDefault();
+            playSound();
             catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
             isMouseDown = true;
-
-            // Start the timer upon touch start
             timer = setTimeout(function() {
-                if (isMouseDown) { // Only increment if touch is still active
-                    countDisplay.textContent = ++counter;
+                if (isMouseDown) {
+                    incrementCounter();
                 }
             }, 400);
         });
 
         document.addEventListener('touchend', function() {
             if (isMouseDown) {
-                // Check if the timer has completed
                 if (timer) {
-                    clearTimeout(timer); // Clear the timer
-                    countDisplay.textContent = ++counter; // Increment the counter
+                    clearTimeout(timer);
+                    incrementCounter();
                 }
                 catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
                 isMouseDown = false;
             }
         });
+
+        function incrementCounter() {
+            counter++;
+            countDisplay.textContent = counter;
+            applyPopAnimation();
+        }
+
+        function applyPopAnimation() {
+            var randomRotation = (Math.random() > 0.5 ? 1 : -1) * Math.random() * 30;
+            countDisplay.style.setProperty('--rotation', randomRotation + 'deg');
+            countDisplay.classList.add('pop');
+            setTimeout(function() {
+                countDisplay.classList.remove('pop');
+            }, 100);
+        }
+
+        function playSound() {
+            var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3');
+            sound.play();
+        }
     </script>
 </body>
 </html>
