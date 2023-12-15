@@ -39,7 +39,7 @@
         }
         img {
             cursor: pointer;
-            width: 900px;
+            width: 600px;
             user-select: none;
         }
         img:active {
@@ -124,7 +124,7 @@
         }
 
         function applyPopAnimation() {
-            var randomRotation = (Math.random() > 0.5 ? 1 : -1) * Math.random() * 25;
+            var randomRotation = (Math.random() > 0.5 ? 1 : -1) * Math.random() * 20;
             countDisplay.style.setProperty('--rotation', randomRotation + 'deg');
             countDisplay.classList.add('pop');
             setTimeout(function() {
