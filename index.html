@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Clicker</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            text-align: center;
+            padding-top: 50px;
+        }
+
+        img {
+            cursor: pointer;
+            /* Adjust width as needed */
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png" alt="Cat" id="catImage">
+    <script>
+        // JavaScript to handle the click event
+        document.getElementById('catImage').addEventListener('click', function() {
+            var audio = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3'); // Replace with your sound file
+            audio.play();
+
+            // Change the image source to the second cat image
+            this.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
+        });
+    </script>
+</body>
+</html>
