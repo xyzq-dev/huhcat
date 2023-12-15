@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POPCAT</title>
+    <title>HUHCAT</title>
     <style>
         body {
             text-align: center;
@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-    <h1>POPCAT</h1>
+    <h1>HUHCAT</h1>
     <div id="counter">0</div>
     <img src="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png"
          alt="Click the cat"
@@ -43,33 +43,57 @@
         var catImage = document.getElementById('catImage');
         var countDisplay = document.getElementById('counter');
         var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3');
+        var image1 = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+        var image2 = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
+        var isMouseDown = false;
 
         // Preload second image
-        var image2 = new Image();
-        image2.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
+        var preloadImage2 = new Image();
+        preloadImage2.src = image2;
 
         catImage.addEventListener('mousedown', function(event) {
             event.preventDefault();
             sound.play();
-            catImage.src = image2.src;
+            catImage.src = image2;
             countDisplay.textContent = ++counter;
+            isMouseDown = true;
+            setTimeout(function() {
+                if (isMouseDown) {
+                    catImage.src = image1;
+                    isMouseDown = false;
+                }
+            }, 400); // Minimum time the second image is shown
         });
 
         document.addEventListener('mouseup', function() {
-            catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+            if (isMouseDown) {
+                setTimeout(function() {
+                    catImage.src = image1;
+                    isMouseDown = false;
+                }, Math.max(0, 400 - sound.duration * 1000)); // Adjust the timeout to the remaining time if sound is longer than 400ms
+            }
         });
 
         // Optional: Handle touch events for mobile browsers
         catImage.addEventListener('touchstart', function(event) {
             event.preventDefault(); // Prevents additional mouse events on touch devices
             sound.play();
-            catImage.src = image2.src;
+            catImage.src = image2;
             countDisplay.textContent = ++counter;
+            isMouseDown = true;
+            setTimeout(function() {
+                if (isMouseDown) {
+                    catImage.src = image1;
+                    isMouseDown = false;
+                }
+            }, 400); // Minimum time the second image is shown
         });
 
         document.addEventListener('touchend', function() {
-            catImage.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+            if (isMouseDown) {
+                setTimeout(function() {
+                    catImage.src = image1;
+                    isMouseDown = false;
+                }, Math.max(0, 400 - sound.duration * 1000)); // Adjust the timeout to the remaining time if sound is longer than 400ms
+            }
         });
-    </script>
-</body>
-</html>
