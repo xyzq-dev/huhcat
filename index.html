@@ -4,25 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Clicker</title>
+    <title>POPCAT</title>
     <style>
         body {
             text-align: center;
             padding-top: 50px;
+            background-color: #a68d60; /* Or use the exact hex color from the image */
+            font-family: 'Arial', sans-serif; /* Choose a font closest to the one in the image */
+            color: white; /* Assuming the text color is white */
+        }
+        #counter {
+            font-size: 48px; /* Adjust as needed */
+            margin-top: 20px; /* Adjust as needed */
         }
         img {
             cursor: pointer;
-            width: 300px; /* Adjust as needed */
+            width: 300px; /* Adjust based on actual image size */
         }
     </style>
 </head>
 <body>
+    <h1>POPCAT</h1>
+    <div id="counter">0</div>
     <img src="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png" 
          alt="Click the cat" 
          id="catImage"
          aria-label="Click the cat to see what happens">
     <script>
         // Preload images and sound
+        var count = 0;
         var image1 = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
         var image2 = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
         var sound = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3');
@@ -31,11 +41,10 @@
         document.getElementById('catImage').addEventListener('click', function() {
             sound.play().catch(e => console.error('Error playing sound:', e));
             this.src = image2;
-
-            // Set a timeout to switch back to the first image after 0.1 seconds
             setTimeout(() => {
                 this.src = image1;
             }, 100); // 100 milliseconds = 0.1 seconds
+            document.getElementById('counter').textContent = ++count;
         });
     </script>
 </body>
