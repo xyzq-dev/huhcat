@@ -6,29 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cat Clicker</title>
     <style>
-        /* Add your CSS styles here */
         body {
             text-align: center;
             padding-top: 50px;
         }
-
         img {
             cursor: pointer;
-            /* Adjust width as needed */
-            width: 300px;
+            width: 300px; /* Adjust as needed */
         }
     </style>
 </head>
 <body>
-    <img src="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png" alt="Cat" id="catImage">
+    <img src="https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png" 
+         alt="Click the cat" 
+         id="catImage"
+         aria-label="Click the cat to see what happens">
     <script>
-        // JavaScript to handle the click event
-        document.getElementById('catImage').addEventListener('click', function() {
-            var audio = new Audio('https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3'); // Replace with your sound file
-            audio.play();
+        // Preload images and sound
+        var image1 = new Image();
+        var image2 = new Image();
+        var sound = new Audio();
 
-            // Change the image source to the second cat image
-            this.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
+        image1.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_1_web.png';
+        image2.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_2_web.png';
+        sound.src = 'https://shdw-drive.genesysgo.net/BYdJ5hsatWXaQXiy2ZwefksTtfoCMnS5mPH2NUjpk7MQ/huh_sound.mp3';
+
+        // Function to toggle image
+        function toggleImage() {
+            var catImage = document.getElementById('catImage');
+            if (catImage.src === image1.src) {
+                catImage.src = image2.src;
+            } else {
+                catImage.src = image1.src;
+            }
+        }
+
+        // Set up click event listener
+        document.getElementById('catImage').addEventListener('click', function() {
+            sound.play().catch(e => console.error('Error playing sound:', e));
+            toggleImage();
         });
     </script>
 </body>
